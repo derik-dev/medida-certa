@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="lenis lenis-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Medida Certa | Saúde Acessível e Especializada</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=MC_V28">
+    <style>
+        html, body, button, input, textarea, select {
+            font-family: 'Montserrat', sans-serif;
+        }
+        #clinic-chat-window {
+            opacity: 0; visibility: hidden;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            pointer-events: none; position: fixed;
+            bottom: 100px; right: 32px; z-index: 10000;
+        }
+        #clinic-chat-window.is-open {
+            opacity: 1 !important; visibility: visible !important;
+            transform: translateY(0) scale(1) !important; pointer-events: auto !important;
+        }
+        .spec-card { transition: all 0.4s cubic-bezier(0.23,1,0.32,1); }
+        .spec-card:hover { background: #162E63; transform: translateY(-4px); box-shadow: 0 20px 50px rgba(22,46,99,0.15); }
+        .spec-card:hover h3 { color: white; }
+        .spec-card:hover p { color: rgba(255,255,255,0.45); }
+        .spec-card:hover .spec-cta { opacity: 1; }
+        .spec-card:hover .spec-icon { background: rgba(212,175,90,0.2); }
+        .spec-cta { opacity: 0; transition: opacity 0.3s ease; }
+        .contact-link { transition: all 0.3s ease; }
+        .contact-link:hover { box-shadow: 0 10px 30px rgba(22,46,99,0.1); transform: translateY(-2px); }
+        .diff-block { transition: all 0.4s ease; }
+        .diff-block:hover { background: rgba(255,255,255,0.09) !important; border-color: rgba(212,175,90,0.4) !important; transform: translateY(-4px); }
+        .step-block { transition: background 0.3s ease; }
+        .step-block:hover { background: #f8f7f4 !important; }
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto; }
+        .lenis.lenis-stopped { overflow: hidden; }
+    </style>
+</head>
+<body class="overflow-x-hidden" style="background:#F8F5EF;">
+
+<!-- NAV -->
+<nav id="main-nav" class="absolute top-0 left-0 w-full z-50 transition-all duration-500">
+    <div class="px-8 lg:px-16 py-3 flex items-center justify-between">
+        <a href="#" class="header-logo-link" aria-label="Cl&iacute;nica Medida Certa">
+            <img class="header-logo" src="images/logo.png" alt="Cl&iacute;nica Medida Certa">
+        </a>
+        <div class="hidden md:flex items-center gap-10 text-[11px] uppercase font-bold tracking-[0.2em] text-white nav-links">
+            <a href="#sobre" class="hover:opacity-60 transition-opacity">Sobre</a>
+            <a href="#especialidades" class="hover:opacity-60 transition-opacity">Especialidades</a>
+            <a href="#informacoes-atendimento" class="hover:opacity-60 transition-opacity">Conv&ecirc;nios</a>
+            <a href="#como-funciona" class="hover:opacity-60 transition-opacity">Como Funciona</a>
+            <a href="#contato" class="hover:opacity-60 transition-opacity">Contato</a>
+        </div>
+        <button class="nav-cta-btn bg-[#D4AF5A] text-[#162E63] px-8 py-3 rounded-full text-[11px] font-black uppercase tracking-widest hover:bg-white transition-all duration-300"
+            onclick="document.querySelector('#contato').scrollIntoView({behavior:'smooth'})">
+            Agendar
+        </button>
+    </div>
+</nav>
+
+<div class="top-flow">
+<!-- HERO -->
+<section id="hero" class="premium-hero relative flex flex-col items-center justify-center overflow-hidden">
+    <div class="hero-light hero-light-right" aria-hidden="true"></div>
+    <div class="hero-light hero-light-left" aria-hidden="true"></div>
+    <div class="hero-vignette" aria-hidden="true"></div>
+
+    <div class="premium-hero-content relative z-10 flex flex-col items-center text-center px-6 mx-auto w-full">
+        <div class="premium-hero-badge reveal-fade">
+            <span></span>
+            Atendimento médico completo e humanizado
+        </div>
+
+        <h1 id="hero-title" class="premium-hero-title reveal-fade">
+            Saúde acessível<br>
+            <span>para toda a família.</span>
+        </h1>
+
+        <p class="premium-hero-copy reveal-fade">
+            Consultas médicas, psicologia, nutrição, neuropsicologia, geriatria e terapias em uma clínica preparada para cuidar de você com leveza, clareza e excelência.
+        </p>
+
+        <div class="premium-hero-actions reveal-fade">
+            <button class="premium-primary-btn btn-magnetic"
+                onclick="document.querySelector('#contato').scrollIntoView({behavior:'smooth'})">
+                Agendar consulta <span aria-hidden="true">→</span>
+            </button>
+            <button class="premium-secondary-btn"
+                onclick="document.querySelector('#especialidades').scrollIntoView({behavior:'smooth'})">
+                Ver especialidades
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- ESPECIALIDADES -->
+<section id="especialidades" class="specialties-light pb-24 lg:pb-32 px-8 lg:px-16 relative overflow-hidden" style="background:#fff;">
+    <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(rgba(212,175,90,0.06) 1px, transparent 1px); background-size: 28px 28px;"></div>
+    <div class="max-w-7xl mx-auto relative z-10">
+        <!-- Centered header -->
+        <div class="flex flex-col items-center text-center mb-16 reveal-fade">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8" style="background:rgba(212,175,90,0.08); border:1px solid rgba(212,175,90,0.2);">
+                <span class="w-1.5 h-1.5 rounded-full" style="background:#D4AF5A;"></span>
+                <span class="text-[11px] font-semibold tracking-[0.2em] uppercase" style="color:#D4AF5A;">O que oferecemos</span>
+            </div>
+            <h2 class="font-black leading-[1.05]" style="font-size:clamp(2.2rem,5vw,4rem); color:#162E63;">
+                Cuidado especializado para<br>
+                <span style="color:#D4AF5A;">toda a sua família.</span>
+            </h2>
+        </div>
+        <!-- Cards grid -->
+        <div class="specialties-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 reveal-fade">
+
+            <!-- Clínica Geral �?" Mais Procurado -->
+            <div class="relative rounded-2xl p-7 flex flex-col" style="background:rgba(255,255,255,0.05); border:1px solid rgba(212,175,90,0.3);">
+                <div class="absolute -top-3.5 right-5">
+                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider" style="background:#D4AF5A; color:#162E63;">Mais Procurado</span>
+                </div>
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5" style="background:rgba(212,175,90,0.15);">
+                    <svg class="w-5 h-5" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                </div>
+                <h3 class="font-bold text-lg text-white mb-2">Clínica Geral</h3>
+                <p class="text-sm leading-relaxed font-light mb-5" style="color:rgba(255,255,255,0.45);">Consultas ambulatoriais e acompanhamento clínico geral para toda a família.</p>
+                <ul class="mt-auto space-y-2">
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Consultas ambulatoriais completas</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Acompanhamento de doenças crônicas</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Aceitamos os principais planos</li>
+                </ul>
+            </div>
+
+            <!-- Psicologia -->
+            <div class="rounded-2xl p-7 flex flex-col" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07);">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5" style="background:rgba(212,175,90,0.12);">
+                    <svg class="w-5 h-5" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+                </div>
+                <h3 class="font-bold text-lg text-white mb-2">Psicologia</h3>
+                <p class="text-sm leading-relaxed font-light mb-5" style="color:rgba(255,255,255,0.45);">Atendimento psicológico para adultos, adolescentes e famílias. Presencial e online.</p>
+                <ul class="mt-auto space-y-2">
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Atendimento presencial e online</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Adultos, adolescentes e famílias</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Abordagens baseadas em evidências</li>
+                </ul>
+            </div>
+
+            <!-- Nutrição -->
+            <div class="rounded-2xl p-7 flex flex-col" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07);">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5" style="background:rgba(212,175,90,0.12);">
+                    <svg class="w-5 h-5" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>
+                </div>
+                <h3 class="font-bold text-lg text-white mb-2">Nutrição</h3>
+                <p class="text-sm leading-relaxed font-light mb-5" style="color:rgba(255,255,255,0.45);">Reeducação alimentar, emagrecimento saudável e nutrição clínica especializada.</p>
+                <ul class="mt-auto space-y-2">
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Reeducação alimentar personalizada</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Emagrecimento saudável e sustentável</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Acompanhamento nutricional clínico</li>
+                </ul>
+            </div>
+
+            <!-- Geriatria -->
+            <div class="rounded-2xl p-7 flex flex-col" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07);">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5" style="background:rgba(212,175,90,0.12);">
+                    <svg class="w-5 h-5" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+                </div>
+                <h3 class="font-bold text-lg text-white mb-2">Geriatria</h3>
+                <p class="text-sm leading-relaxed font-light mb-5" style="color:rgba(255,255,255,0.45);">Cuidado integral do paciente idoso com atenção às condições crônicas e qualidade de vida.</p>
+                <ul class="mt-auto space-y-2">
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Cuidado integral do paciente idoso</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Gestão de condições crônicas</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Qualidade de vida e independência</li>
+                </ul>
+            </div>
+
+            <!-- Angiologia -->
+            <div class="rounded-2xl p-7 flex flex-col" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07);">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5" style="background:rgba(212,175,90,0.12);">
+                    <svg class="w-5 h-5" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z"/></svg>
+                </div>
+                <h3 class="font-bold text-lg text-white mb-2">Angiologia</h3>
+                <p class="text-sm leading-relaxed font-light mb-5" style="color:rgba(255,255,255,0.45);">Avaliação e acompanhamento da saúde vascular, circulação e sintomas relacionados.</p>
+                <ul class="mt-auto space-y-2">
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Circulação e vasos sanguíneos</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Varizes e sintomas vasculares</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Orientação clínica especializada</li>
+                </ul>
+            </div>
+
+            <!-- Cardiologia -->
+            <div class="rounded-2xl p-7 flex flex-col" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07);">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5" style="background:rgba(212,175,90,0.12);">
+                    <svg class="w-5 h-5" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"/></svg>
+                </div>
+                <h3 class="font-bold text-lg text-white mb-2">Cardiologia</h3>
+                <p class="text-sm leading-relaxed font-light mb-5" style="color:rgba(255,255,255,0.45);">Cuidado com a saúde do coração, prevenção e acompanhamento cardiovascular.</p>
+                <ul class="mt-auto space-y-2">
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Avaliação cardiovascular</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Prevenção e acompanhamento</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Orientação para exames</li>
+                </ul>
+            </div>
+
+            <!-- Dermatologia -->
+            <div class="rounded-2xl p-7 flex flex-col" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07);">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5" style="background:rgba(212,175,90,0.12);">
+                    <svg class="w-5 h-5" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+                </div>
+                <h3 class="font-bold text-lg text-white mb-2">Dermatologia</h3>
+                <p class="text-sm leading-relaxed font-light mb-5" style="color:rgba(255,255,255,0.45);">Avaliação da pele, orientações dermatológicas e cuidado preventivo.</p>
+                <ul class="mt-auto space-y-2">
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Cuidado da pele</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Avaliação dermatológica</li>
+                    <li class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,0.65);"><svg class="w-4 h-4 flex-shrink-0" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Prevenção e orientação</li>
+                </ul>
+            </div>
+
+            <!-- CTA card -->
+            <div class="specialties-cta-card rounded-2xl p-7 flex flex-col justify-between" style="background:rgba(212,175,90,0.08); border:1px solid rgba(212,175,90,0.2);">
+                <div>
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5" style="background:rgba(212,175,90,0.15);">
+                        <svg class="w-5 h-5" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
+                    </div>
+                    <div class="text-[10px] font-black tracking-widest uppercase mb-3" style="color:#D4AF5A;">Mais áreas</div>
+                    <h3 class="font-bold text-white text-lg mb-3">Confira a lista completa.</h3>
+                    <p class="text-sm font-light" style="color:rgba(255,255,255,0.4);">Também atendemos endocrinologia, gastroenterologia, ginecologia, ortopedia, pediatria, psiquiatria e urologia.</p>
+                </div>
+                <button class="mt-6 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all hover:opacity-80" style="background:#D4AF5A; color:#162E63;"
+                    onclick="document.querySelector('#informacoes-atendimento').scrollIntoView({behavior:'smooth'})">
+                    Ver lista completa
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Bottom CTA row -->
+        <div class="flex flex-col items-center gap-4 mt-14 reveal-fade">
+            <p class="specialties-support-copy text-sm font-light" style="color:rgba(255,255,255,0.35);">Não sabe qual especialidade é a ideal para você?</p>
+            <button class="btn-magnetic flex items-center gap-2 px-9 py-4 rounded-full text-[12px] font-black uppercase tracking-widest transition-all hover:opacity-85" style="background:#D4AF5A; color:#162E63;"
+                onclick="document.querySelector('#contato').scrollIntoView({behavior:'smooth'})">
+                Falar com um especialista &nbsp;→
+            </button>
+        </div>
+
+    </div>
+</section>
+
+<!-- INFORMACOES ESSENCIAIS -->
+<section id="informacoes-atendimento" class="info-hub-section py-20 lg:py-28 px-6 sm:px-8 lg:px-16">
+    <div class="info-hub-shell max-w-7xl mx-auto">
+        <div class="info-hub-head reveal-fade">
+            <div>
+                <span class="info-hub-kicker">Informa&ccedil;&otilde;es essenciais</span>
+                <h2>Especialidades e conv&ecirc;nios em um s&oacute; lugar.</h2>
+            </div>
+            <p>Uma consulta r&aacute;pida para o paciente entender o que a cl&iacute;nica oferece antes de chamar no WhatsApp.</p>
+        </div>
+
+        <div class="info-hub-card reveal-fade">
+            <div class="info-hub-tabs" role="tablist" aria-label="Informa&ccedil;&otilde;es da Cl&iacute;nica Medida Certa">
+                <button class="info-hub-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="info-panel-especialidades" id="info-tab-especialidades" data-info-tab="especialidades">
+                    Especialidades M&eacute;dicas
+                </button>
+                <button class="info-hub-tab" type="button" role="tab" aria-selected="false" aria-controls="info-panel-convenios" id="info-tab-convenios" data-info-tab="convenios">
+                    Conv&ecirc;nios
+                </button>
+            </div>
+
+            <div class="info-hub-panels">
+                <div class="info-hub-panel is-active" role="tabpanel" id="info-panel-especialidades" aria-labelledby="info-tab-especialidades" data-info-panel="especialidades">
+                    <div class="info-hub-panel-copy">
+                        <span>Especialidades atendidas</span>
+                        <h3>&Aacute;reas atendidas pela cl&iacute;nica.</h3>
+                        <p>Lista oficial de especialidades dispon&iacute;veis na Cl&iacute;nica Medida Certa.</p>
+                    </div>
+                    <ul class="info-hub-list" aria-label="Lista de especialidades m&eacute;dicas">
+                        <li>Angiologia</li>
+                        <li>Cl&iacute;nica Geral</li>
+                        <li>Cardiologia</li>
+                        <li>Dermatologia</li>
+                        <li>Endocrinologia</li>
+                        <li>Gastroenterologia</li>
+                        <li>Ginecologia</li>
+                        <li>Geriatria</li>
+                        <li>Nutri&ccedil;&atilde;o</li>
+                        <li>Ortopedia</li>
+                        <li>Pediatria</li>
+                        <li>Psicologia</li>
+                        <li>Psiquiatria</li>
+                        <li>Urologia</li>
+                    </ul>
+                </div>
+
+                <div class="info-hub-panel info-hub-panel-convenios" role="tabpanel" id="info-panel-convenios" aria-labelledby="info-tab-convenios" data-info-panel="convenios" hidden>
+                    <div class="info-hub-panel-copy">
+                        <span>Conv&ecirc;nios parceiros</span>
+                        <h3>Principais conv&ecirc;nios.</h3>
+                        <p>Confira os principais planos informados pela cl&iacute;nica e confirme a cobertura antes do atendimento.</p>
+                    </div>
+                    <div class="info-plan-board">
+                        <div class="info-plan-card">
+                            <span class="info-plan-status">Lista oficial</span>
+                            <h4>Conv&ecirc;nios aceitos</h4>
+                            <p>A cobertura pode variar conforme plano, contrato e disponibilidade. Para confirmar, entre em contato com a recep&ccedil;&atilde;o.</p>
+                        </div>
+                        <div class="info-plan-side">
+                            <ul class="info-hub-list info-plan-list" aria-label="Lista de conv&ecirc;nios parceiros">
+                                <li>Bradesco Sa&uacute;de</li>
+                                <li>Sa&uacute;de Petrobras</li>
+                                <li>SulAm&eacute;rica Sa&uacute;de</li>
+                                <li>Sa&uacute;de Caixa</li>
+                                <li>Mediservice</li>
+                                <li>Hapvida NotreDame Interm&eacute;dica</li>
+                                <li>Assim Sa&uacute;de</li>
+                                <li>GEAP</li>
+                                <li>CMD Checkup</li>
+                                <li>Adobro Sa&uacute;de (E-Sa&uacute;de)</li>
+                                <li>Life Empresarial Sa&uacute;de</li>
+                                <li>Sindicato dos Vigilantes de Maca&eacute;</li>
+                            </ul>
+                            <div class="info-plan-next">
+                                <span>Confirma&ccedil;&atilde;o de cobertura</span>
+                                <p>Informe seu plano, especialidade desejada e dados de contato para a equipe consultar a agenda.</p>
+                            </div>
+                        </div>
+                        <div class="info-plan-footer">
+                            <span>Consulte agenda, m&eacute;dicos e confirma&ccedil;&atilde;o de cobertura com a recep&ccedil;&atilde;o.</span>
+                            <button class="info-hub-action" type="button"
+                                onclick="document.querySelector('#contato').scrollIntoView({behavior:'smooth'})">
+                                Confirmar meu plano
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+
+<!-- POR QUE N�"S -->
+<section id="diferenciais" class="why-section py-24 lg:py-32 px-6 sm:px-8 lg:px-16 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(rgba(212,175,90,0.06) 1px, transparent 1px); background-size: 30px 30px;"></div>
+    <div class="why-glow why-glow-left" aria-hidden="true"></div>
+    <div class="why-glow why-glow-right" aria-hidden="true"></div>
+
+    <div class="why-layout max-w-7xl mx-auto relative z-10">
+        <div class="why-intro reveal-fade">
+            <div class="why-pill inline-flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full" style="background:#D4AF5A;"></span>
+                <span>Por que escolher</span>
+            </div>
+
+            <h2 class="why-title">
+                Por que a<br>
+                <span>Medida Certa?</span>
+            </h2>
+
+            <p class="why-copy">
+                Sa&uacute;de de qualidade precisa ser acess&iacute;vel sem perder a escuta, o acolhimento e a compet&ecirc;ncia t&eacute;cnica em cada atendimento.
+            </p>
+
+            <div class="why-tags" aria-label="Diferenciais resumidos">
+                <span>Especialidades integradas</span>
+                <span>Planos aceitos</span>
+                <span>Cuidado para a fam&iacute;lia</span>
+            </div>
+
+            <button class="why-cta btn-magnetic"
+                onclick="document.querySelector('#contato').scrollIntoView({behavior:'smooth'})">
+                Agendar consulta
+            </button>
+        </div>
+
+        <div class="why-board reveal-fade">
+            <article class="diff-block why-card why-card-primary cursor-default">
+                <div class="why-card-top">
+                    <div class="why-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+                    </div>
+                    <span class="why-index">01</span>
+                </div>
+                <h4>Atendimento Humanizado</h4>
+                <p>Cada paciente &eacute; recebido com aten&ccedil;&atilde;o, respeito e um cuidado pensado para a sua rotina.</p>
+                <div class="why-card-highlights">
+                    <span>Escuta</span>
+                    <span>Respeito</span>
+                    <span>Individualidade</span>
+                </div>
+            </article>
+
+            <article class="diff-block why-card why-card-team cursor-default">
+                <div class="why-card-top">
+                    <div class="why-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
+                    </div>
+                    <span class="why-index">02</span>
+                </div>
+                <h4>Equipe Multidisciplinar</h4>
+                <p>Especialistas de diversas &aacute;reas trabalhando juntos pelo seu bem-estar.</p>
+            </article>
+
+            <article class="diff-block why-card why-card-plans cursor-default">
+                <div class="why-card-top">
+                    <div class="why-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <span class="why-index">03</span>
+                </div>
+                <h4>Aceitamos Planos</h4>
+                <p>Conv&ecirc;nios selecionados ajudam a tornar o acesso &agrave; sa&uacute;de mais simples.</p>
+            </article>
+
+            <article class="diff-block why-card why-card-space cursor-default">
+                <div class="why-card-top">
+                    <div class="why-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
+                    </div>
+                    <span class="why-index">04</span>
+                </div>
+                <div>
+                    <h4>Ambiente Acolhedor</h4>
+                    <p>Um espa&ccedil;o preparado para voc&ecirc; se sentir confort&aacute;vel desde a chegada.</p>
+                </div>
+            </article>
+        </div>
+    </div>
+
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona" class="process-section py-24 lg:py-32 px-6 sm:px-8 lg:px-16">
+    <div class="process-shell max-w-7xl mx-auto">
+        <div class="process-head reveal-fade">
+            <div>
+                <div class="process-pill">
+                    <span></span>
+                    Simples assim
+                </div>
+                <h2 class="process-title">Como funciona.</h2>
+            </div>
+            <div class="process-summary">
+                <p>Do primeiro contato ao atendimento, o caminho &eacute; direto para voc&ecirc; cuidar da sa&uacute;de com clareza.</p>
+                <button class="process-cta btn-magnetic"
+                    onclick="document.querySelector('#contato').scrollIntoView({behavior:'smooth'})">
+                    Come&ccedil;ar agora
+                </button>
+            </div>
+        </div>
+
+        <div class="process-track reveal-fade">
+            <article class="step-block process-step">
+                <div class="process-step-top">
+                    <span class="process-number">01</span>
+                    <div class="process-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                    </div>
+                </div>
+                <h3>Entre em contato</h3>
+                <p>Conte qual especialidade procura e informe seu plano pelo WhatsApp ou Instagram.</p>
+                <span class="process-note">Conversa inicial</span>
+            </article>
+
+            <article class="step-block process-step">
+                <div class="process-step-top">
+                    <span class="process-number">02</span>
+                    <div class="process-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                </div>
+                <h3>Agende sua consulta</h3>
+                <p>Escolha o melhor dia e hor&aacute;rio. A equipe confirma os detalhes com rapidez.</p>
+                <span class="process-note">Agenda alinhada</span>
+            </article>
+
+            <article class="step-block process-step process-step-featured">
+                <div class="process-step-top">
+                    <span class="process-number">03</span>
+                    <div class="process-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                </div>
+                <h3>Comece seu cuidado</h3>
+                <p>Seja atendido por especialistas e receba um plano de cuidado para a sua sa&uacute;de.</p>
+                <span class="process-note">Atendimento completo</span>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos" class="py-24 lg:py-32 overflow-hidden" style="background:#0A1020;">
+
+    <!-- Header -->
+    <div class="flex flex-col items-center text-center px-8 mb-16 reveal-fade">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8" style="background:rgba(212,175,90,0.1); border:1px solid rgba(212,175,90,0.25);">
+            <span class="w-1.5 h-1.5 rounded-full" style="background:#D4AF5A;"></span>
+            <span class="text-[11px] font-semibold tracking-[0.2em] uppercase" style="color:#D4AF5A;">Depoimentos</span>
+        </div>
+        <h2 class="font-black leading-[1.05] text-white" style="font-size:clamp(2.2rem,5vw,4rem);">
+            O que dizem quem já<br>
+            <span style="color:#D4AF5A;">cuida da saúde conosco.</span>
+        </h2>
+    </div>
+
+    <!-- Row 1 — scroll left -->
+    <div class="testimonials-row mb-4">
+        <div class="testimonials-track track-left">
+            <!-- Card set (duplicado para loop infinito) -->
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Maria Silva</div><p class="testi-text">"Encontrei um lugar que realmente me ouviu. O atendimento é acolhedor e muito profissional."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">João Carvalho</div><p class="testi-text">"Meu pai é paciente da Medida Certa há um ano. A equipe é atenciosa e muito competente."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Ana Beatriz</div><p class="testi-text">"Perdi 8kg em 3 meses com acompanhamento personalizado. A nutricionista é incrível!"</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Roberto Mendes</div><p class="testi-text">"Agendamento fácil pelo WhatsApp, aceitam meu plano e o atendimento foi excelente."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Carla Ferreira</div><p class="testi-text">"A avaliação neuropsicológica foi completa e o laudo foi essencial para o diagnóstico do meu filho."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Lucas Andrade</div><p class="testi-text">"Comecei o acompanhamento psicológico e a diferença na minha qualidade de vida foi enorme."</p></div>
+            <!-- Duplicatas -->
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Maria Silva</div><p class="testi-text">"Encontrei um lugar que realmente me ouviu. O atendimento é acolhedor e muito profissional."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">João Carvalho</div><p class="testi-text">"Meu pai é paciente da Medida Certa há um ano. A equipe é atenciosa e muito competente."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Ana Beatriz</div><p class="testi-text">"Perdi 8kg em 3 meses com acompanhamento personalizado. A nutricionista é incrível!"</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Roberto Mendes</div><p class="testi-text">"Agendamento fácil pelo WhatsApp, aceitam meu plano e o atendimento foi excelente."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Carla Ferreira</div><p class="testi-text">"A avaliação neuropsicológica foi completa e o laudo foi essencial para o diagnóstico do meu filho."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Lucas Andrade</div><p class="testi-text">"Comecei o acompanhamento psicológico e a diferença na minha qualidade de vida foi enorme."</p></div>
+        </div>
+    </div>
+
+    <!-- Row 2 — scroll right -->
+    <div class="testimonials-row">
+        <div class="testimonials-track track-right">
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Fernanda Costa</div><p class="testi-text">"Minha mãe adora os médicos daqui. São pacientes e muito humanos no atendimento aos idosos."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Paulo Rodrigues</div><p class="testi-text">"Atendimento impecável desde a recepção até a consulta. Recomendo para toda a família."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Sofia Almeida</div><p class="testi-text">"O processo de avaliação foi bem explicado e o resultado muito preciso. Excelente equipe."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Marcos Lima</div><p class="testi-text">"Sem burocracia, rápido e com meu plano aceito. O atendimento superou minhas expectativas."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Juliana Pereira</div><p class="testi-text">"Me sinto acolhida em cada sessão. O espaço é confortável e os profissionais são excepcionais."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Rafael Santos</div><p class="testi-text">"Indicaram para meu avô e o acompanhamento foi fundamental. Equipe muito dedicada."</p></div>
+            <!-- Duplicatas -->
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Fernanda Costa</div><p class="testi-text">"Minha mãe adora os médicos daqui. São pacientes e muito humanos no atendimento aos idosos."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Paulo Rodrigues</div><p class="testi-text">"Atendimento impecável desde a recepção até a consulta. Recomendo para toda a família."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Sofia Almeida</div><p class="testi-text">"O processo de avaliação foi bem explicado e o resultado muito preciso. Excelente equipe."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Marcos Lima</div><p class="testi-text">"Sem burocracia, rápido e com meu plano aceito. O atendimento superou minhas expectativas."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Juliana Pereira</div><p class="testi-text">"Me sinto acolhida em cada sessão. O espaço é confortável e os profissionais são excepcionais."</p></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-name">Rafael Santos</div><p class="testi-text">"Indicaram para meu avô e o acompanhamento foi fundamental. Equipe muito dedicada."</p></div>
+        </div>
+    </div>
+
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="py-24 lg:py-32 px-8 lg:px-16" style="background:#F8F5EF;">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div class="reveal-fade">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-px" style="background:#D4AF5A;"></div>
+                <span class="text-[10px] font-black tracking-[0.45em] uppercase" style="color:#D4AF5A;">Fale Conosco</span>
+            </div>
+            <h2 class="font-black leading-[1.0] mb-6" style="font-size:clamp(2.5rem,5vw,4.5rem); color:#162E63;">AGENDE SUA<br>CONSULTA.</h2>
+            <p class="text-lg leading-relaxed mb-10 font-light max-w-md" style="color:rgba(38,49,77,0.6);">
+                Entre em contato pelo WhatsApp ou Instagram. Nossa equipe responde rapidamente e encontra o melhor horário para você.
+            </p>
+            <div class="space-y-3">
+                <a href="https://wa.me/55" target="_blank" class="contact-link flex items-center gap-5 bg-white rounded-2xl p-5">
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(212,175,90,0.1);">
+                        <svg class="w-6 h-6" style="color:#D4AF5A;" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-bold text-sm" style="color:#162E63;">WhatsApp</div>
+                        <div class="text-xs font-light" style="color:rgba(38,49,77,0.5);">Resposta rápida · Agende sua consulta</div>
+                    </div>
+                    <svg class="w-4 h-4" style="color:rgba(38,49,77,0.25);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+                <a href="https://instagram.com/clinicamedidacerta" target="_blank" class="contact-link flex items-center gap-5 bg-white rounded-2xl p-5">
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(212,175,90,0.1);">
+                        <svg class="w-6 h-6" style="color:#D4AF5A;" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-bold text-sm" style="color:#162E63;">Instagram</div>
+                        <div class="text-xs font-light" style="color:rgba(38,49,77,0.5);">@clinicamedidacerta</div>
+                    </div>
+                    <svg class="w-4 h-4" style="color:rgba(38,49,77,0.25);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+                <div class="flex items-center gap-5 bg-white rounded-2xl p-5">
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(212,175,90,0.1);">
+                        <svg class="w-6 h-6" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div>
+                        <div class="font-bold text-sm" style="color:#162E63;">Horário de Atendimento</div>
+                        <div class="text-xs font-light" style="color:rgba(38,49,77,0.5);">Segunda a Sábado · Sob agendamento</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reveal-fade">
+            <div class="rounded-3xl p-10 text-white" style="background:#111C3A;">
+                <div class="text-[10px] font-black tracking-widest uppercase mb-6" style="color:#D4AF5A;">Informações</div>
+                <h3 class="font-black text-2xl mb-8">Clínica Medida Certa</h3>
+                <div class="space-y-6 pt-6" style="border-top: 1px solid rgba(255,255,255,0.06);">
+                    <div class="flex items-start gap-4">
+                        <svg class="w-5 h-5 shrink-0 mt-0.5" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <div>
+                            <div class="text-[10px] font-black uppercase tracking-widest mb-1" style="color:rgba(255,255,255,0.35);">Endereço</div>
+                            <div class="text-sm font-light" style="color:rgba(255,255,255,0.7);">Consulte via WhatsApp para o endereço atualizado.</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <svg class="w-5 h-5 shrink-0 mt-0.5" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        <div>
+                            <div class="text-[10px] font-black uppercase tracking-widest mb-1" style="color:rgba(255,255,255,0.35);">Planos Aceitos</div>
+                            <div class="text-sm font-light" style="color:rgba(255,255,255,0.7);">Veja a se&ccedil;&atilde;o de conv&ecirc;nios ou confirme a disponibilidade via WhatsApp.</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <svg class="w-5 h-5 shrink-0 mt-0.5" style="color:#D4AF5A;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <div>
+                            <div class="text-[10px] font-black uppercase tracking-widest mb-1" style="color:rgba(255,255,255,0.35);">Funcionamento</div>
+                            <div class="text-sm font-light" style="color:rgba(255,255,255,0.7);">Segunda a Sábado, sob agendamento.</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-full mt-8 py-4 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all hover:opacity-80"
+                    style="background:#D4AF5A; color:#162E63;"
+                    onclick="window.open('https://wa.me/55','_blank')">
+                    Agendar pelo WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="px-8 lg:px-16 py-12" style="background:#162E63; border-top: 1px solid rgba(255,255,255,0.05);">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+        <div>
+            <div class="flex items-center gap-1 mb-1">
+                <span class="text-white font-black text-lg tracking-widest">MEDIDA</span>
+                <span class="font-black text-lg tracking-widest" style="color:#D4AF5A;">&nbsp;CERTA</span>
+            </div>
+            <p class="text-xs font-light" style="color:rgba(255,255,255,0.2);">Clínica Médica Especializada · Aceitamos planos</p>
+        </div>
+        <div class="flex gap-8 text-[11px] font-bold uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">
+            <a href="#sobre" class="hover:text-white transition-colors">Sobre</a>
+            <a href="#especialidades" class="hover:text-white transition-colors">Especialidades</a>
+            <a href="#informacoes-atendimento" class="hover:text-white transition-colors">Conv&ecirc;nios</a>
+            <a href="#contato" class="hover:text-white transition-colors">Contato</a>
+        </div>
+        <p class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,0.12);">© 2026 Clínica Medida Certa · Criado por Derik Gomes</p>
+    </div>
+</footer>
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="clinic-chat-widget">
+    <div class="chat-window" id="clinic-chat-window">
+        <div class="chat-shell">
+            <div class="chat-header flex justify-between items-start">
+                <div class="chat-header-copy flex-1 min-w-0 pr-4">
+                    <h3 class="font-bold text-xl truncate">Assistente Medida Certa</h3>
+                    <p class="text-white/70 text-sm mt-1">Consultas, especialidades e planos.</p>
+                </div>
+                <button id="clinic-chat-close" class="text-white">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </button>
+            </div>
+            <div class="chat-feed" id="clinic-chat-feed">
+                <div class="chat-bubble assistant">Olá! Como posso ajudar? Posso informar sobre especialidades, planos aceitos ou ajudar com o agendamento.</div>
+            </div>
+            <div class="chat-tools" aria-label="A&ccedil;&otilde;es r&aacute;pidas do assistente">
+                <button class="chat-quick-action" type="button" data-chat-info="especialidades">Especialidades M&eacute;dicas</button>
+                <button class="chat-quick-action" type="button" data-chat-info="convenios">Conv&ecirc;nios</button>
+            </div>
+            <form class="chat-form p-4 flex gap-2 border-t border-slate-100" id="clinic-chat-form">
+                <input id="clinic-chat-input" class="flex-1 bg-slate-50 border-none px-4 py-2 rounded-xl text-sm outline-none" type="text" placeholder="Digite sua dúvida...">
+                <button class="px-4 py-2 rounded-xl text-xs font-bold text-white" style="background:#111C3A;" type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.32/dist/lenis.min.js"></script>
+<script src="script.js?v=MC_V17" defer></script>
+</body>
+</html>
